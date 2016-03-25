@@ -1,7 +1,13 @@
 #!/usr/bin/perl
-
+use Dir::Self;
+use lib __DIR__ . "/src";
+use lib __DIR__ . "/API";
 use Getopt::Long;
-GetOptions("help!"=>\$help,"path=s"=>\$guessmorph_home,"input=s"=>\$input,"output=s",\$output);
+use feature_filter;
+use shakti_tree_api;
+use DisambiguateFeature;
+
+GetOptions("help!"=>\$help,"input=s"=>\$input,"output=s",\$output);
 print "Unprocessed by Getopt::Long\n" if $ARGV[0];
 foreach (@ARGV) {
 	print "$_\n";
@@ -11,23 +17,10 @@ foreach (@ARGV) {
 if($help eq 1)
 {
 	print "Guess Morph  - Guess Morph Version 1.2\n(14th July 2007 last modified on 9th August 2009)\n\n";
-	print "usage : ./guessmorph.pl --path=/home/guessmorph-1.2 [-i inputfile|--input=\"input_file\"] [-o outputfile|--output=\"output_file\"] \n";
+	print "usage : ./guessmorph.pl [-i inputfile|--input=\"input_file\"] [-o outputfile|--output=\"output_file\"] \n";
 	print "\tIf the output file is not mentioned then the output will be printed to STDOUT\n";
 	exit(0);
 }
-
-if($guessmorph_home eq "")
-{
-	print "Please Specify the Path as defined in --help\n";
-	exit(0);
-}
-#print $guessmorph_home;
-my $src=$guessmorph_home . "/src";
-my $output_tmp=$guessmorph_home . "/OUTPUT.tmp";
-require "$guessmorph_home/API/shakti_tree_api.pl";
-require "$guessmorph_home/API/feature_filter.pl";
-require "$src/Disambiguate_Feature.pl";
-
 
 if ($input eq "")
 {

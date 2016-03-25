@@ -1,4 +1,10 @@
-#!usr/bin/perl
+package DisambiguateFeature;
+use feature_filter;
+use shakti_tree_api;
+use Exporter qw(import);
+
+our @EXPORT = qw(Disambiguate_Feature);
+
 #use strict;
 #use GDBM_File;
 #the module prunes multiple feature structures
