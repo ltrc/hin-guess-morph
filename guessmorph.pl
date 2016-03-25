@@ -27,17 +27,17 @@ if ($input eq "")
   $input="/dev/stdin";
 }
 
-&read_story($input);
+read_story($input);
 
-$numBody = &get_bodycount();
+$numBody = get_bodycount();
 #print "$numBody";
 for(my($bodyNum)=1;$bodyNum<=$numBody;$bodyNum++)
 {
 
-	$body = &get_body($bodyNum,$body);
+	$body = get_body($bodyNum,$body);
 
 # Count the number of Paragraphs in the story
-	my($numPara) = &get_paracount($body);
+	my($numPara) = get_paracount($body);
 
 #print STDERR "Paras : $numPara\n";
 
@@ -47,33 +47,33 @@ for(my($bodyNum)=1;$bodyNum<=$numBody;$bodyNum++)
 
 		my($para);
 		# Read Paragraph
-		$para = &get_para($i);
+		$para = get_para($i);
 
 
 		# Count the number of sentences in this paragraph
-		my($numSent) = &get_sentcount($para);
+		my($numSent) = get_sentcount($para);
 		# Iterate through sentences in the paragraph
 		for(my($j)=1;$j<=$numSent;$j++)
 		{
 
 			# Read the sentence which is in SSF format
-			my($sent) = &get_sent($para,$j);
+			my($sent) = get_sent($para,$j);
                         #print "YES";
 			#Copy Vibhakti Info
-      		        #&ComputeVibhakti($sent,$vibh_home);
+      		        #ComputeVibhakti($sent,$vibh_home);
 
 			#Compute TAM
-			&Disambiguate_Feature($sent, $guessmorph_home);
+			Disambiguate_Feature($sent, $guessmorph_home);
 		}
 	}
 }
 
 if($output eq "" )
 {
-	&printstory();
+	printstory();
 }
 
 else
 {
-	&printstory_file("$output");
+	printstory_file("$output");
 }
