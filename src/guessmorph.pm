@@ -1,9 +1,9 @@
-package DisambiguateFeature;
+package guessmorph;
 use feature_filter;
 use shakti_tree_api;
 use Exporter qw(import);
 
-our @EXPORT = qw(Disambiguate_Feature);
+our @EXPORT = qw(guessmorph);
 
 #use strict;
 #use GDBM_File;
@@ -82,4 +82,53 @@ sub Disambiguate_Feature
 	}
 
 }
+
+sub guessmorph {
+    my ($input, $output) = @_;
+
+    read_story($input);
+
+    $numBody = get_bodycount();
+    #print "$numBody";
+    for (my($bodyNum)=1;$bodyNum<=$numBody;$bodyNum++) {
+
+        $body = get_body($bodyNum,$body);
+
+        # Count the number of Paragraphs in the story
+        my ($numPara) = get_paracount($body);
+
+        #print STDERR "Paras : $numPara\n";
+
+        # Iterate through paragraphs in the story
+        for (my($i)=1;$i<=$numPara;$i++) {
+
+            my ($para);
+            # Read Paragraph
+            $para = get_para($i);
+
+
+            # Count the number of sentences in this paragraph
+            my ($numSent) = get_sentcount($para);
+            # Iterate through sentences in the paragraph
+            for (my($j)=1;$j<=$numSent;$j++) {
+
+                # Read the sentence which is in SSF format
+                my ($sent) = get_sent($para,$j);
+                #print "YES";
+                #Copy Vibhakti Info
+                #ComputeVibhakti($sent,$vibh_home);
+
+                #Compute TAM
+                Disambiguate_Feature($sent);
+            }
+        }
+    }
+
+    if ($output eq "" ) {
+        printstory();
+    } else {
+        printstory_file("$output");
+    }
+}
+
 1;
