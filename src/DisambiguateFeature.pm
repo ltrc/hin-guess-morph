@@ -12,7 +12,6 @@ our @EXPORT = qw(Disambiguate_Feature);
 sub Disambiguate_Feature
 {
 	my $sent = @_[0];
-	my $guessmorph_home = @_[1];
 		
 	my @all_leaves = get_leaves($sent);
 	foreach $node (@all_leaves)

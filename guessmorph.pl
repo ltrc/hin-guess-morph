@@ -63,7 +63,7 @@ for(my($bodyNum)=1;$bodyNum<=$numBody;$bodyNum++)
       		        #ComputeVibhakti($sent,$vibh_home);
 
 			#Compute TAM
-			Disambiguate_Feature($sent, $guessmorph_home);
+			Disambiguate_Feature($sent);
 		}
 	}
 }
